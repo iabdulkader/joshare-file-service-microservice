@@ -4,7 +4,6 @@ import userModel from "../db/model/userModel";
 
 const downloadController = async (req: NewRequestType, res: Response) => {
     const { id } = req.params;
-    console.log(id)
 
     try {
         const file = await userModel.findOne({ pin: req.user.pin, 'files.id': id }, { 'files.$': 1 });
