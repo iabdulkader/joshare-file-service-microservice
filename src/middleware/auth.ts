@@ -2,9 +2,17 @@ import { User } from './../types';
 import jwtDecode from 'jwt-decode';
 import { Response, NextFunction } from 'express';
 import { NewRequestType } from '../types/index';
+import decodeUser from '../utils/decodeToken';
 
 const auth = (req: NewRequestType, res: Response, next: NextFunction) => {
     let token: string | undefined;
+
+    const { token: queryToken } = req.query;
+    
+    if(queryToken) {
+        token = queryToken as string;
+    }
+
 
     if(typeof req.headers["x-authorization"] === "string") {
         token = req.headers["x-authorization"].split(" ")[1];
@@ -13,14 +21,11 @@ const auth = (req: NewRequestType, res: Response, next: NextFunction) => {
     if (!token) return res.status(401).json({ msg: 'No token, authorization denied' });
 
     try {
-        const decoded = jwtDecode<User>(token);
-        req.user = {
-            pin: decoded.pin,
-            expire: new Date(decoded.expire),
-        };
+        let userAuth = decodeUser(token, req)
+        if(!userAuth) return res.status(400).json({ msg: 'Token is not' });
         next();
     } catch (e) {
-        res.status(400).json({ msg: 'Token is not' });
+        return res.status(400).json({ msg: 'Token is not' });
     }
 };
 

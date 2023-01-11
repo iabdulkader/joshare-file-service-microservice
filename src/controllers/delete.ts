@@ -8,7 +8,8 @@ const deleteController = async (req: NewRequestType, res: Response) => {
     try {
         fs.unlink(url, (err) => {
             if (err) {
-                res.status(404).json({
+                console.log(err.message)
+                return res.status(404).json({
                     success: false,
                     status: "error",
                     message: "Error while deleting file",
@@ -16,14 +17,14 @@ const deleteController = async (req: NewRequestType, res: Response) => {
             }
         });
 
-        res.json({
+        return res.json({
             success: true,
             status: "File deleted",
         })
 
     } catch (error) {
-        console.log(error)
-        res.status(404).json({
+        console.log(error.message)
+        return res.status(404).json({
             success: false,
             status: "error",
             message: "File not found",
