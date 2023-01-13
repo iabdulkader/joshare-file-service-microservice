@@ -44,7 +44,7 @@ app.get("/", async (req: Request, res: Response) => {
     });
 
 app.post("/api/upload", auth, uploadController);
-app.get("/api/download/:id", auth, downloadController);
+app.get("/api/download/:id", downloadController);
 app.post("/api/delete", auth, deleteController);
 
 io.on("connection", (socket: Socket) => {
