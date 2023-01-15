@@ -6,15 +6,7 @@ const deleteController = async (req: NewRequestType, res: Response) => {
     const { url } = req.body;
 
     try {
-        fs.unlink(url, (err) => {
-            if (err) {
-                res.status(500).json({
-                    success: false,
-                    status: "error",
-                    message: "Error while deleting file",
-                });
-            }
-        });
+        fs.unlinkSync(url);
 
         res.status(200).json({
             success: true,

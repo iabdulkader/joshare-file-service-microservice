@@ -48,8 +48,28 @@ app.get("/api/download/:id", downloadController);
 app.post("/api/delete", auth, deleteController);
 
 io.on("connection", (socket: Socket) => {
-    console.log("a user connected");
+    console.log(socket.id);
+
+    socket.on("join", (data) => {
+        socket.join(data.pin);
+
+        socket.to(data.pin).emit("message", data.pin);
+
+        socket.on("upload-progress", (data) => {
+            socket.to(data.pin).emit("upload-progress", data);
+        })
+
+        socket.on("upload-complete", (data) => {
+            socket.to(data.pin).emit("upload-complete", data);
+        })
+    })
+
+
     });
+
+    
+
+
 
 const port = process.env.PORT || 5000;
 
