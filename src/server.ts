@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 const server = http.createServer(app);
 
 export const io = new Server(server, {
-    path: '/socket',
+    path: "/socket/",
     cors: {
         origin: "*",
     }});
