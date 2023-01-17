@@ -52,15 +52,18 @@ io.on("connection", (socket: Socket) => {
     console.log(socket.id);
 
     socket.on("join", (data) => {
+        console.log("join", data.pin);
         socket.join(data.pin);
 
         socket.to(data.pin).emit("message", data.pin);
 
         socket.on("upload-progress", (data) => {
+            console.log("upload-progress", data);
             socket.to(data.pin).emit("upload-progress", data);
         })
 
         socket.on("upload-complete", (data) => {
+            console.log("upload-complete", data);
             socket.to(data.pin).emit("upload-complete", data);
         })
     })
