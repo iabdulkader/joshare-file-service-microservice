@@ -33,6 +33,7 @@ export const io = new Server(server, {
     path: "/socket/",
     cors: {
         origin: "*",
+        credentials: true
     }});
 
 
