@@ -54,23 +54,22 @@ io.on("connection", (socket: Socket) => {
 
     socket.on("join", (data) => {
         socket.join(data.pin);
+        console.log("join", data.pin);
+    })
 
-        socket.to(data.pin).emit("message", data.pin);
+    socket.on("upload-progress", (data) => {
+        console.log("upload-progress", data);
+        console.log(socket.to(data.pin).emit("upload-progress", data));
+    })
 
-        socket.on("upload-progress", (data) => {
-            console.log("upload-progress", data);
-            socket.to(data.pin).emit("upload-progress", data);
-        })
+    socket.on("upload-complete", (data) => {
+        console.log("upload-complete", data);
+        socket.to(data.pin).emit("upload-complete", data);
+    })
 
-        socket.on("upload-complete", (data) => {
-            console.log("upload-complete", data);
-            socket.to(data.pin).emit("upload-complete", data);
-        })
-
-        socket.on("delete-file", (data) => {
-            console.log("delete-file", data);
-            socket.to(data.pin).emit("delete-file", data);
-        })
+    socket.on("delete-file", (data) => {
+        console.log("delete-file", data);
+        socket.to(data.pin).emit("delete-file", data);
     })
 
 
