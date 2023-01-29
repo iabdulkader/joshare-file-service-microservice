@@ -60,6 +60,10 @@ io.on("connection", (socket: Socket) => {
         console.log(socket.to(data.pin).emit("upload-progress", data));
     })
 
+    socket.on("cancel-upload", (data) => {
+        socket.to(data.pin).emit("delete-file", data);
+    });
+
     socket.on("upload-complete", (data) => {
         socket.to(data.pin).emit("upload-complete", data);
     })
@@ -69,7 +73,8 @@ io.on("connection", (socket: Socket) => {
     })
 
 
-    });
+
+});
 
     
 
