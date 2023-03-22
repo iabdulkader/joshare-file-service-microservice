@@ -1,10 +1,8 @@
-version: '3'
+version: "3"
 services:
-  web:
+  server:
     image: joshare-server
     ports:
       - "5000:5000"
     volumes:
       - ./uploads:/src/app/uploads
-
-  
