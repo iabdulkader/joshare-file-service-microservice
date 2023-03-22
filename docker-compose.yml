@@ -5,4 +5,4 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./uploads:/src/app/uploads
+      - /uploads:/src/app/uploads
